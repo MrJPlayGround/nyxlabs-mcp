@@ -1,0 +1,25 @@
+{
+  "name": "nyxlabs-mcp",
+  "version": "0.1.0",
+  "description": "Read-only MCP server for NyxLabs trading journal context",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MrJPlayGround/nyxlabs-mcp.git"
+  },
+  "bin": {
+    "nyxlabs-mcp": "index.js"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.26.0",
+    "zod": "^4.3.6"
+  }
+}
