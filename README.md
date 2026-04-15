@@ -25,6 +25,8 @@ Your AI account is your own account. NyxLabs does not provide or route through a
 6. Restart or reload your AI client.
 7. Ask the AI client to use NyxLabs.
 
+If you are testing this for the first time, start with full read scopes. After it works, create a narrower token if you only want a specific client to read part of your journal.
+
 ```json
 {
   "mcpServers": {
@@ -43,6 +45,48 @@ Your AI account is your own account. NyxLabs does not provide or route through a
 Replace `nyx_mcp_REPLACE_ME` with the token from NyxLabs.
 
 The `#v0.1.0` suffix pins testers to a known release. The NyxLabs team will publish a new tag when the MCP client changes.
+
+## Where To Paste The Config
+
+Different clients store MCP config in different places.
+
+### Claude Desktop
+
+Open Claude Desktop settings, go to Developer settings, and edit the MCP config file.
+
+Common config locations:
+
+- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
+
+Paste the `mcpServers` JSON block into that file, save it, then fully restart Claude Desktop.
+
+### Cursor
+
+Open Cursor settings and search for MCP. Add a new MCP server using the same `nyxlabs` config block.
+
+If Cursor asks for a command and environment variables separately:
+
+- Command: `npx`
+- Args: `-y github:MrJPlayGround/nyxlabs-mcp#v0.1.0`
+- Env `NYXLABS_API_URL`: `https://nyxlabs.app`
+- Env `NYXLABS_MCP_TOKEN`: your `nyx_mcp_...` token
+
+### Other MCP Clients
+
+Use stdio transport with:
+
+- Command: `npx`
+- Args: `-y github:MrJPlayGround/nyxlabs-mcp#v0.1.0`
+- Environment: `NYXLABS_API_URL` and `NYXLABS_MCP_TOKEN`
+
+## First Test Prompt
+
+After restarting your AI client, ask:
+
+> Use NyxLabs to list my trading accounts, then summarize my recent trading performance.
+
+If the setup worked, the AI should call NyxLabs tools such as `list_accounts` and `get_performance_summary`. If it answers without using NyxLabs, ask it directly: "Use the NyxLabs MCP tools for this."
 
 ## Token Scopes
 
