@@ -46,6 +46,36 @@ Replace `nyx_mcp_REPLACE_ME` with the token from NyxLabs.
 
 The `#v0.1.0` suffix pins testers to a known release. The NyxLabs team will publish a new tag when the MCP client changes.
 
+## Agent Handoff
+
+If you are giving this to an AI agent to install or inspect, give it this repo:
+
+```text
+https://github.com/MrJPlayGround/nyxlabs-mcp
+```
+
+Tell the agent:
+
+- This is a stdio MCP server.
+- The package entrypoint is `index.js`.
+- The recommended install source is `github:MrJPlayGround/nyxlabs-mcp#v0.1.0`.
+- The runtime command is `npx -y github:MrJPlayGround/nyxlabs-mcp#v0.1.0`.
+- Required environment variables are `NYXLABS_API_URL` and `NYXLABS_MCP_TOKEN`.
+- Do not edit the NyxLabs app repo to use this; install this MCP server in the AI client's MCP config.
+
+Minimal MCP server definition:
+
+```json
+{
+  "command": "npx",
+  "args": ["-y", "github:MrJPlayGround/nyxlabs-mcp#v0.1.0"],
+  "env": {
+    "NYXLABS_API_URL": "https://nyxlabs.app",
+    "NYXLABS_MCP_TOKEN": "nyx_mcp_REPLACE_ME"
+  }
+}
+```
+
 ## Where To Paste The Config
 
 Different clients store MCP config in different places.
@@ -79,6 +109,52 @@ Use stdio transport with:
 - Command: `npx`
 - Args: `-y github:MrJPlayGround/nyxlabs-mcp#v0.1.0`
 - Environment: `NYXLABS_API_URL` and `NYXLABS_MCP_TOKEN`
+
+## Local Clone Fallback
+
+Use this only if `npx github:MrJPlayGround/nyxlabs-mcp#v0.1.0` is blocked by the user's network or MCP client.
+
+```bash
+git clone https://github.com/MrJPlayGround/nyxlabs-mcp.git
+cd nyxlabs-mcp
+npm install
+```
+
+Then point the MCP client at the absolute path to `index.js`.
+
+Example macOS/Linux config:
+
+```json
+{
+  "mcpServers": {
+    "nyxlabs": {
+      "command": "node",
+      "args": ["/ABSOLUTE/PATH/TO/nyxlabs-mcp/index.js"],
+      "env": {
+        "NYXLABS_API_URL": "https://nyxlabs.app",
+        "NYXLABS_MCP_TOKEN": "nyx_mcp_REPLACE_ME"
+      }
+    }
+  }
+}
+```
+
+Example Windows path:
+
+```json
+{
+  "mcpServers": {
+    "nyxlabs": {
+      "command": "node",
+      "args": ["C:\\Users\\YOUR_NAME\\path\\to\\nyxlabs-mcp\\index.js"],
+      "env": {
+        "NYXLABS_API_URL": "https://nyxlabs.app",
+        "NYXLABS_MCP_TOKEN": "nyx_mcp_REPLACE_ME"
+      }
+    }
+  }
+}
+```
 
 ## First Test Prompt
 
